@@ -27,6 +27,8 @@ jobs:
         run: |-
             gcloud auth configure-docker --quiet
 
+            
+        #Gotta change the line below
       - name: Build Docker image
         run: |
           docker build -t LOCATION-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} .
