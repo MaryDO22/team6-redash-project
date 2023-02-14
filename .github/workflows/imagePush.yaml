@@ -3,11 +3,14 @@ name: Build and push Docker image
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: team6-redash
+      IMAGE_TAG: devOps
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
