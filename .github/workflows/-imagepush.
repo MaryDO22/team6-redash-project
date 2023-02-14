@@ -1,0 +1,29 @@
+name: Build and push Docker image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          version: 'latest'
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Build Docker image
+        run: |
+          docker build -t LOCATION-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} .
+
+      - name: Push Docker image to Artifact Registry
+        run: |
+          docker push LOCATION-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
