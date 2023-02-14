@@ -23,8 +23,8 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
 
-      - name: COnfigure Docke cliet
-          run: |-
+      - name: COnfigure Docke Client
+        run: |-
             gcloud auth configure-docker --quiet
 
       - name: Build Docker image
