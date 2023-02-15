@@ -2,7 +2,8 @@ name: SonarCloud Scan
 on:
   push:
     branches:
-      - master
+      - none #master
+  workflow_dispatch:
 
 jobs:
   sonarcloud:

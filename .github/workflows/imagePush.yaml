@@ -3,8 +3,10 @@ name: Build and push Docker image
 on:
   push:
     branches:
-      - master
-
+      - none #master
+      
+  workflow_dispatch:    
+  
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -25,14 +27,15 @@ jobs:
 
       - name: COnfigure Docke Client
         run: |-
-            gcloud auth configure-docker --quiet
+            gcloud auth configure-docker us-west2-docker.pkg.dev --quiet
 
             
         #Gotta change the line below
       - name: Build Docker image
         run: |
-          docker build -t LOCATION-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} .
+          docker build -t us-west2-docker.pkg.dev/terraform-project-serbianum/team6-redash-docker/${{ env.IMAGE_NAME }} .
+        #LOCATION-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} .
 
       - name: Push Docker image to Artifact Registry
         run: |
-          docker push LOCATION-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          docker push us-west2-docker.pkg.dev/terraform-project-serbianum/team6-redash-docker/${{ env.IMAGE_NAME }}
