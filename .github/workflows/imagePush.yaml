@@ -25,17 +25,17 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
 
-      - name: Configure Docke Client
-        run: |-
-            gcloud auth configure-docker us-west2-docker.pkg.dev --quiet
-
-            
-        #Gotta change the line below
       - name: Build Docker image
-        run: |
+        run: |-
           docker build -t us-west2-docker.pkg.dev/terraform-project-serbianum/team6-redash-docker/${{ env.IMAGE_NAME }} .
         #LOCATION-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} .
 
+      - name: Configure Docke Client
+        run: |-
+            gcloud auth configure-docker us-west2-docker.pkg.dev --quiet
+            
+        #Gotta change the line below
+
       - name: Push Docker image to Artifact Registry
-        run: |
+        run: |-
           docker push us-west2-docker.pkg.dev/terraform-project-serbianum/team6-redash-docker/${{ env.IMAGE_NAME }}
