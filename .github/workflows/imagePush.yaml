@@ -38,4 +38,4 @@ jobs:
 
       - name: Push Docker image to Artifact Registry
         run: |-
-          docker push us-west2-docker.pkg.dev/terraform-project-serbianum/team6-redash-docker/${{ env.IMAGE_NAME }}
+          docker push us-west2-docker.pkg.dev/terraform-project-serbianum/team6-redash-docker
